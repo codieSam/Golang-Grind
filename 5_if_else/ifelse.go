@@ -10,7 +10,7 @@ func main() {
 	// } else {
 	// 	fmt.Println("Person is not an adult")
 	// }
-
+	// Go don't have trenary operator like other programming languages. We can use if else statement instead of ternary operator.
 	var role = "admin"
 	var hasPermission = true
 
