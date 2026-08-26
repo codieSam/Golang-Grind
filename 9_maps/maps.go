@@ -3,6 +3,7 @@ package main
 //maps -> hash, object, dict
 import (
 	"fmt"
+	"maps"
 )
 
 func main() {
@@ -29,14 +30,19 @@ func main() {
 
 	// fmt.Println(m["Volvo"], m["BMW"], m["Ford"], m["name"])
 
-	n := map[string]int{"Volvo": 2010, "BMW": 2015, "Ford": 2005}
+	// n := map[string]int{"Volvo": 2010, "BMW": 2015, "Ford": 2005}
 
-	v, ok := n["Ford"]
-	fmt.Println(v)
-	if ok {
-		fmt.Println("It's okay")
-	} else {
-		fmt.Println("It's not okay")
-	}
+	// v, ok := n["Ford"]
+	// fmt.Println(v)
+	// if ok {
+	// 	fmt.Println("It's okay")
+	// } else {
+	// 	fmt.Println("It's not okay")
+	// }
+
+	m := map[string]int{"Volvo": 2010, "BMW": 2015, "Ford": 2005}
+	n := map[string]int{"Volvooooo": 2010, "BMW": 2015, "Ford": 2005}
+
+	fmt.Println(maps.Equal(m, n))
 
 }
