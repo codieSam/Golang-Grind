@@ -7,49 +7,70 @@ import (
 
 // order structs
 
+type customer struct {
+	name  string
+	phone string
+}
+
+// using struct embedding
+
 type order struct {
 	id        string
 	amount    float32
 	status    string
 	createdAt time.Time // nanosecond precision
+	customer            // embedding customer struct
 }
 
-//constructer function to create a new order
+// //constructer function to create a new order
 
-func newOrder(id string, amount float32, status string) *order {
-	//initial steup goes here ...
-	myOrder := order{
-		id:     id,
-		amount: amount,
-		status: status,
-	}
+// func newOrder(id string, amount float32, status string) *order {
+// 	//initial steup goes here ...
+// 	myOrder := order{
+// 		id:     id,
+// 		amount: amount,
+// 		status: status,
+// 	}
 
-	return &myOrder
+// 	return &myOrder
 
-}
+// }
 
-// receiver function to change the status of the order
-func (o *order) changeStatus(status string) {
-	o.status = status
-}
+// // receiver function to change the status of the order
+// func (o *order) changeStatus(status string) {
+// 	o.status = status
+// }
 
-func (o order) getAmount() float32 {
-	return o.amount
-}
+// func (o order) getAmount() float32 {
+// 	return o.amount
+// }
 
 func main() {
 
+	newOrder := order{
+		id:        "1",
+		amount:    100.00,
+		status:    "received",
+		createdAt: time.Now(),
+		customer: customer{
+			name:  "John Doe",
+			phone: "123-456-7890",
+		},
+	}
+
+	fmt.Println(newOrder)
+
 	// we can make a striuct inside main function if we want to use it only in main function
 
-	language := struct {
-		name   string
-		isGood bool
-	}{"Golang", true}
+	// language := struct {
+	// 	name   string
+	// 	isGood bool
+	// }{"Golang", true}
 
-	fmt.Println(language)
+	// fmt.Println(language)
 
-	myOrder := newOrder("1", 30.50, "received")
-	fmt.Println(myOrder)
+	// myOrder := newOrder("1", 30.50, "received")
+	// fmt.Println(myOrder)
 
 	// myOrder1 := order{
 	// 	id:     "1",
