@@ -31,8 +31,9 @@ import (
 // 	// done <- true
 // }
 
-func emailSender(emailChan chan string, done chan bool) {
+func emailSender(emailChan <-chan string, done chan<- bool) {
 	defer func() { done <- true }()
+
 	for email := range emailChan {
 		fmt.Println("Sending email to ", email)
 		time.Sleep(time.Second)
@@ -41,17 +42,41 @@ func emailSender(emailChan chan string, done chan bool) {
 
 func main() {
 
-	emailChan := make(chan string, 100)
-	done := make(chan bool)
+	chan1 := make(chan int)
+	chan2 := make(chan string)
 
-	go emailSender(emailChan, done)
+	go func() {
+		chan1 <- 10
+	}()
 
-	for i := 0; i < 100; i++ {
-		emailChan <- fmt.Sprintf("%d@gmail.com", i)
+	go func() {
+		chan2 <- "Pong"
+	}()
+
+	for i := 0; i < 2; i++ {
+		select {
+		case chan1Val := <-chan1:
+			fmt.Println("Received data from chan1: ", chan1Val)
+		case chan2Val := <-chan2:
+			fmt.Println("Received data from chan2: ", chan2Val)
+		}
+
 	}
 
-	fmt.Println("Done sending")
-	<-done
+	// emailChan := make(chan string, 100)
+	// done := make(chan bool)
+
+	// go emailSender(emailChan, done)
+
+	// for i := 1; i < 5; i++ {
+	// 	emailChan <- fmt.Sprintf("%d@gmail.com", i)
+	// }
+
+	// fmt.Println("Done sending")
+	// // this is important to close the channel to avoid deadlock
+	// close(emailChan)
+
+	// <-done
 	// emailChan <- "1@example.com"
 	// emailChan <- "2@gmail.com"
 
