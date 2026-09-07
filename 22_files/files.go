@@ -23,20 +23,46 @@ func main() {
 
 	// read file
 
-	f, err := os.Open("example.txt")
+	// f, err := os.Open("example.txt")
+
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	// defer f.Close()
+	// buff := make([]byte, 12)
+	// d, err := f.Read(buff)
+	// if err != nil {
+	// 	panic(err)
+	// }
+	// for i := 0; i < len(buff); i++ {
+	// 	fmt.Println("Data: ", d, string(buff[i]))
+	// }
+
+	// we can simply read the file using ReadFile method
+
+	data, err := os.ReadFile("example.txt")
 
 	if err != nil {
 		panic(err)
 	}
 
-	defer f.Close()
-	buff := make([]byte, 10)
-	d, err := f.Read(buff)
+	fmt.Println(string(data))
+
+	// Read folders
+
+	dir, err := os.Open("../")
+
 	if err != nil {
 		panic(err)
 	}
-	for i := 0; i < len(buff); i++ {
-		fmt.Println("Data: ", d, string(buff[i]))
+
+	defer dir.Close()
+
+	fileInfo, err := dir.ReadDir(-1)
+
+	for _, fi := range fileInfo {
+		fmt.Println(fi.Name(), fi.IsDir())
 	}
 
 }
